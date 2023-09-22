@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Profile from './pages/Profile'
@@ -6,13 +7,14 @@ import Register from './pages/Register'
 import Posts from './pages/Posts'
 
 function App() {
+  const [token, setToken] = useState(null)
   return (
     <div>
       <Routes>
         <Route path="/" element={<Posts />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register setToken={setToken} />} />
       </Routes>
     </div>
   )
