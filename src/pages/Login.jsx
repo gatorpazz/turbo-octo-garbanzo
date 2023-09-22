@@ -8,6 +8,7 @@ const Login = ({setToken}) => {
     e.preventDefault();
     const token = await loginUser(username, password);
     setToken(token);
+    localStorage.setItem('token', token);
   }
   return (
     <div>

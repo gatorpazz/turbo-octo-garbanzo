@@ -7,11 +7,11 @@ import Register from './pages/Register'
 import Posts from './pages/Posts'
 
 function App() {
-  const [token, setToken] = useState(null)
+  const [token, setToken] = useState(localStorage.getItem('token'))
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Posts />} />
+        <Route path="/" element={<Posts token={token}/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route path="/register" element={<Register setToken={setToken} />} />

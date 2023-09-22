@@ -8,6 +8,7 @@ const Register = ({setToken}) => {
     e.preventDefault();
     const token = await registerUser(username, password);
     setToken(token);
+    localStorage.setItem('token', token);
   }
   return (
     <div>
