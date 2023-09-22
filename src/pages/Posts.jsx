@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { fetchPosts } from '../API';
+import CreatePostForm from '../components/CreatePostForm';
 
-const Posts = () => {
+const Posts = ({token}) => {
   const [posts, setPosts] = useState([]);
-  
+  async function fetchData() {
+    const posts = await fetchPosts();
+    setPosts(posts);
+  }
   useEffect(() => {
-    async function fetchData() {
-      const posts = await fetchPosts();
-      setPosts(posts);
-    }
     fetchData();
   }, []);
-
+  console.log(posts);
   async function editPost() {
     // do a fetch call to PATCH /posts/:id
     // send the updated post data in the body
@@ -20,14 +20,16 @@ const Posts = () => {
   return (
     <div>
       <h1>Posts</h1>
+      {token && <CreatePostForm token={token} fetchPosts={fetchData} />}
       {
-        posts.map((post) => (
-          <div key={post._id}>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <p>Author: {post.author.username}</p>
-            <p>Location: {post.location}</p>
-            <p>Price: {post.price}</p>
+        posts.map(({_id, title, description, author, location, price, willDeliver}) => (
+          <div className="post" key={_id}>
+            <h2>{title}</h2>
+            <p>{description}</p>
+            <p>Author: {author.username}</p>
+            <p>Location: {location}</p>
+            <p>Price: {price}</p>
+            <p>Will Deliver: {String(willDeliver)}</p>
           </div>
         ))
       }
